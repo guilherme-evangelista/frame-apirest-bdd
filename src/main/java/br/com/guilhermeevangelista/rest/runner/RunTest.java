@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions( strict = true,
         plugin = {"html:target/cucumber-report", "json:target/cucumber.json"},
-        features = {"src/test/features"},
+        features = {"src/resources/features"},
         glue = {"br/com/guilhermeevangelista/rest/steps", "br/com/guilhermeevangelista/rest/hooks"},
         tags = {"@incluirContaRepetida"})
 
