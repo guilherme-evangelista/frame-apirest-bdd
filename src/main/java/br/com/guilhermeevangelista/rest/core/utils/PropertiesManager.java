@@ -1,4 +1,4 @@
-package br.com.guilhermeevangelista.rest.utils;
+package br.com.guilhermeevangelista.rest.core.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import java.util.Properties;
 public class PropertiesManager {
 
     Properties prop = new Properties();
-    File file = new File("src/main/resources/Properties");
+    File file = new File("src/main/resources");
 
     public String getProp(String valor) {
         try {

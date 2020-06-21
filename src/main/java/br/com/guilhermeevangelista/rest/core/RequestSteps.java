@@ -1,8 +1,8 @@
-package br.com.guilhermeevangelista.rest.steps;
+package br.com.guilhermeevangelista.rest.core;
 
-import br.com.guilhermeevangelista.rest.utils.PropertiesManager;
-import br.com.guilhermeevangelista.rest.utils.FakeUtils;
+import br.com.guilhermeevangelista.rest.core.utils.PropertiesManager;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +21,6 @@ public class RequestSteps{
 
     protected static PropertiesManager propertiesManager = new PropertiesManager();
 
-    protected FakeUtils fakeUtils = new FakeUtils();
-
     public Response realizarGet(String api){
         response = given()
                 .when()
@@ -40,7 +38,7 @@ public class RequestSteps{
         return response;
     }
 
-    public Response realizarPostComMap(String api, Map<String, Object> body){
+    public Response realizarPost(String api, Map<String, Object> body){
         response = given()
                     .body(body)
                 .when()
@@ -49,10 +47,30 @@ public class RequestSteps{
         return response;
     }
 
-    public Response realizarPostComMap(String api, Map<String, Object> body, String token){
+    public Response realizarPost(String api, Map<String, Object> body, String token){
         response = given()
                     .header("Authorization", "JWT " + token)
                     .body(body)
+                .when()
+                    .post("/"+api);
+
+        return response;
+    }
+
+    public Response realizarPost(String api, JSONObject body){
+        response = given()
+                    .body(body)
+                .when()
+                    .post("/"+api);
+
+        return response;
+    }
+
+    public Response realizarPost(String api, JSONObject body, String token){
+        response = given()
+                    .header("Authorization", "JWT " + token)
+                    .body(body.toString())
+//                    .log().all()
                 .when()
                     .post("/"+api);
 
@@ -84,7 +102,7 @@ public class RequestSteps{
         map.put("email", propertiesManager.getProp("USER_"+user.toUpperCase()));
         map.put("senha", propertiesManager.getProp("PASSWORD_"+user.toUpperCase()));
 
-        token = realizarPostComMap("signin", map)
+        token = realizarPost("signin", map)
                 .then()
 //                    .log().all()
                     .extract().path("token");
@@ -104,9 +122,9 @@ public class RequestSteps{
                 .extract().statusCode();
     }
 
-    public boolean bodyContains(String text){
+    public boolean bodyContains(Object text){
         return response.then()
-                    .extract().body().asString().contains(text);
+                    .extract().body().asString().contains(String.valueOf(text));
     }
 
     protected void gerarLog(String texto) {

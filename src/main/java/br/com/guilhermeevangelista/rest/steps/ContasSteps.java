@@ -1,48 +1,51 @@
 package br.com.guilhermeevangelista.rest.steps;
 
-import io.cucumber.java.pt.Dado;
+import br.com.guilhermeevangelista.rest.core.RequestSteps;
+import br.com.guilhermeevangelista.rest.core.utils.FakeUtils;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class ContasSteps extends RequestSteps {
 
     private static String nomeCompania;
     private List<Object> contasList;
 
-    @Dado("que eu obtenha o token previamente do user {string}")
-    public void queEuObtenhaOTokenPreviamenteDoUser(String conta) {
-        Assert.assertThat(super.getToken(conta), Matchers.notNullValue());
-    }
-
     @Quando("faco uma requisicao GET na api de contas {string} token")
     public void facoUmaRequisicaoGETNaApiDeContasToken(String comOuSem) {
-        if (comOuSem.equalsIgnoreCase("com"))
-            super.realizarGet("contas", token);
-        else if (comOuSem.equalsIgnoreCase("sem"))
-            super.realizarGet("contas");
-        else
-            super.gerarLogErro("Argumento Invalido");
+        switch (comOuSem){
+            default:
+                throw new IllegalArgumentException();
+            case "com":
+                super.realizarGet("contas", token);
+                break;
+            case "sem":
+                super.realizarGet("contas");
+                break;
+        }
     }
 
     @Quando("faco uma requisicao POST na api de contas {string} token")
     public void facoUmaRequisicaoPOSTNaApiDeContasToken(String comOuSem) {
-
-        nomeCompania = super.fakeUtils.getNomeCompania();
-
         map = new HashMap<>();
+        nomeCompania = FakeUtils.gerarNomeCompania();
         map.put("nome", nomeCompania);
 
-        if (comOuSem.equalsIgnoreCase("com"))
-            super.realizarPostComMap("contas", map, token);
-        else if (comOuSem.equalsIgnoreCase("sem"))
-            super.realizarPostComMap("contas", map);
-        else
-            super.gerarLogErro("Argumento Invalido");
+        switch (comOuSem){
+            default:
+                throw new IllegalArgumentException();
+            case "com":
+                super.realizarPost("contas", map, token);
+                break;
+            case "sem":
+                super.realizarPost("contas", map);
+                break;
+        }
+
     }
 
     @Quando("faco uma requisicao POST na api de contas {string} token e com nome repetido")
@@ -51,38 +54,42 @@ public class ContasSteps extends RequestSteps {
         contasList = super.getListaPorPath("nome");
 
         nomeCompania = String.valueOf(contasList.get(random.nextInt(contasList.size())));
-
         map = new HashMap<>();
         map.put("nome", nomeCompania);
 
-        if (comOuSem.equalsIgnoreCase("com"))
-            super.realizarPostComMap("contas", map, token);
-        else if (comOuSem.equalsIgnoreCase("sem"))
-            super.realizarPostComMap("contas", map);
-        else
-            super.gerarLogErro("Argumento Invalido");
-
+        switch (comOuSem){
+            default:
+                throw new IllegalArgumentException();
+            case "com":
+                super.realizarPost("contas", map, token);
+                break;
+            case "sem":
+                super.realizarPost("contas", map);
+                break;
+        }
     }
 
     @Quando("faco uma requisicao PUT na api de contas {string} token")
     public void facoUmaRequisicaoPUTNaApiDeContasToken(String comOuSem) {
-
         this.facoUmaRequisicaoGETNaApiDeContasToken("com");
         contasList = super.getListaPorPath("id");
 
-        nomeCompania = super.fakeUtils.getNomeCompania();
-
+        nomeCompania = FakeUtils.gerarNomeCompania();
         map = new HashMap<>();
         map.put("nome", nomeCompania);
 
         String id = String.valueOf(contasList.get(random.nextInt(contasList.size())));
 
-        if (comOuSem.equalsIgnoreCase("com"))
-            super.realizarPutComMap("contas/"+id, map, token);
-        else if (comOuSem.equalsIgnoreCase("sem"))
-            super.realizarPutComMap("contas", map);
-        else
-            super.gerarLogErro("Argumento Invalido");
+        switch (comOuSem){
+            default:
+                throw new IllegalArgumentException();
+            case "com":
+                super.realizarPost("contas/"+id, map, token);
+                break;
+            case "sem":
+                super.realizarPost("contas", map);
+                break;
+        }
     }
 
     @Entao("valido o status code {int}")
@@ -108,5 +115,12 @@ public class ContasSteps extends RequestSteps {
     @E("valido a mensagem {string}")
     public void validoAMensagem(String mensagem) {
         Assert.assertTrue(super.bodyContains(mensagem));
+    }
+
+    @E("certifique que eu tenho uma conta criada")
+    public void certifiqueQueEuTenhoUmaContaCriada() {
+        facoUmaRequisicaoGETNaApiDeContasToken("com");
+        contasList = super.getListaPorPath("id");
+        Assert.assertTrue(contasList.size()>0);
     }
 }

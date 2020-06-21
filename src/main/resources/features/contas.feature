@@ -2,6 +2,7 @@
 #encoding: utf-8
 #author: Guilherme Evangelista
 
+  @regression
   Funcionalidade: Api de Contas
 
     @resquisicaoSemToken @negativo

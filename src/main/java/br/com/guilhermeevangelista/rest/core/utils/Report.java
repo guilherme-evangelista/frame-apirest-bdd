@@ -1,5 +1,6 @@
-package br.com.guilhermeevangelista.rest.utils;
+package br.com.guilhermeevangelista.rest.core.utils;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.rajatthareja.reportbuilder.ReportBuilder;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class Report {
     private static final DateFormat dateFormatFile = new SimpleDateFormat("ddMMyyyy");
     private static final Date date = new Date();
 
-    public static void gerarRelatio() {
+    public static void gerarRelatio(){
 
         // Create ReportBuilder Object
         ReportBuilder reportBuilder = new ReportBuilder();
@@ -25,7 +26,7 @@ public class Report {
         reportBuilder.setReportFileName(dateFormatFile.format(date));
 
         // Set Report Title
-        reportBuilder.setReportTitle("Curso Rest Frame");
+        reportBuilder.setReportTitle("Frame ResAssured Bdd G.Evangelista");
         reportBuilder.setReportColor("yellow");
 
         // Enable voice control for report

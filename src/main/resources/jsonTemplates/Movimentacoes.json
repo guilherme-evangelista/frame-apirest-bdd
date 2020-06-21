@@ -1,0 +1,11 @@
+{
+  "conta_id" : 123456,
+  "usuario_id" : 123456,
+  "descricao" : "descricao",
+  "envolvido" : "envolvido",
+  "tipo" : "(DESP/REC)",
+  "data_transacao" : "(dd/MM/YYYY)",
+  "data_pagamento" : "(dd/MM/YYYY)",
+  "valor" : 1234.56,
+  "status" : true
+}
