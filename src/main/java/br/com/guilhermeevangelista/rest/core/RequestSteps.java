@@ -70,7 +70,7 @@ public class RequestSteps{
         response = given()
                     .header("Authorization", "JWT " + token)
                     .body(body.toString())
-//                    .log().all()
+                    .log().all()
                 .when()
                     .post("/"+api);
 

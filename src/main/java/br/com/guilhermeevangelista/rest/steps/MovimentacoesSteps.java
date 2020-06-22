@@ -34,6 +34,11 @@ public class MovimentacoesSteps extends RequestSteps{
         }
     }
 
+    @Então("valido que a movimentacao foi inserida com sucesso")
+    public void validoQueAMovimentacaoFoiInseridaComSucesso() {
+        Assert.assertEquals(201, super.getStatusCode());
+    }
+
     public JSONObject gerarValoresDeMovimentacao() throws IOException {
         return JsonUtils.obterArquivoJson("Movimentacoes", getMapRandomMovimentacao());
     }
@@ -43,7 +48,7 @@ public class MovimentacoesSteps extends RequestSteps{
         contasList = super.getListaPorPath("id");
 
         map = new HashMap<>();
-        map.put("conta_id", contasList.get(random.nextInt(contasList.size()+1)));
+        map.put("conta_id", contasList.get(random.nextInt(contasList.size())));
         map.put("descricao", "Boleto da "+FakeUtils.gerarNomeCompania());
         map.put("envolvido", FakeUtils.gerarNomeCompleto());
         map.put("tipo", random.nextInt(2)==0? "DESP" : "REC");
@@ -52,11 +57,6 @@ public class MovimentacoesSteps extends RequestSteps{
         map.put("valor", FakeUtils.gerarValorTransacaoAleatorio());
         map.put("status", random.nextInt(2) == 0);
         return map;
-    }
-
-    @Então("valido que a movimentacao foi inserida com sucesso")
-    public void validoQueAMovimentacaoFoiInseridaComSucesso() {
-        Assert.assertEquals(201, super.getStatusCode());
     }
 }
 

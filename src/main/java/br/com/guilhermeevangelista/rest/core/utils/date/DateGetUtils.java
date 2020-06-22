@@ -30,14 +30,14 @@ public class DateGetUtils {
         TimeZone tz = TimeZone.getTimeZone(ZoneId.systemDefault());
         DateFormat df = new SimpleDateFormat(pattern.toString());
         df.setTimeZone(tz);
-        return df.format(new Date(isPast?  System.currentTimeMillis() - (configurarTempoAleatorio(0.5)): System.currentTimeMillis() + configurarTempoAleatorio(1)));
+        return df.format(new Date(isPast?  System.currentTimeMillis() - (configurarTempoAleatorio(2)): System.currentTimeMillis() + configurarTempoAleatorio(2)));
     }
 
     public static String getDate(boolean isPast, DateFormatUtils pattern, boolean isUTC){
         TimeZone tz = TimeZone.getTimeZone(isUTC? ZoneId.of("UTC") : ZoneId.systemDefault());
         DateFormat df = new SimpleDateFormat(pattern.toString());
         df.setTimeZone(tz);
-        return df.format(new Date(isPast? System.currentTimeMillis() - configurarTempoAleatorio(0.5): System.currentTimeMillis() + configurarTempoAleatorio(1)));
+        return df.format(new Date(isPast? System.currentTimeMillis() - configurarTempoAleatorio(2): System.currentTimeMillis() + configurarTempoAleatorio(2)));
     }
 
     private static long configurarTempoAleatorio(double anosMaximos){
