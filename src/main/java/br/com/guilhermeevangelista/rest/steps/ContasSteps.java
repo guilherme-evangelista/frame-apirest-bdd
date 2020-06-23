@@ -1,6 +1,6 @@
 package br.com.guilhermeevangelista.rest.steps;
 
-import br.com.guilhermeevangelista.rest.core.RequestSteps;
+import br.com.guilhermeevangelista.rest.core.BaseRequest;
 import br.com.guilhermeevangelista.rest.core.utils.FakeUtils;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -10,7 +10,7 @@ import org.junit.Assert;
 import java.util.HashMap;
 import java.util.List;
 
-public class ContasSteps extends RequestSteps {
+public class ContasSteps extends BaseRequest {
 
     private static String nomeCompania;
     private List<Object> contasList;
@@ -84,10 +84,10 @@ public class ContasSteps extends RequestSteps {
             default:
                 throw new IllegalArgumentException();
             case "com":
-                super.realizarPost("contas/"+id, map, token);
+                super.realizarPutComMap("contas/"+id, map, token);
                 break;
             case "sem":
-                super.realizarPost("contas", map);
+                super.realizarPutComMap("contas", map);
                 break;
         }
     }
@@ -95,26 +95,31 @@ public class ContasSteps extends RequestSteps {
     @Entao("valido o status code {int}")
     public void validoOStatusCode(int statusCode) {
         Assert.assertEquals(statusCode, super.getStatusCode());
+        addText("Status code retornado: " + super.getStatusCode());
     }
 
     @E("valido a mensagem de usuario nao autorizado")
     public void validoAMensagemDeUsuarioNaoAutorizado() {
         Assert.assertTrue(super.bodyContains("Unauthorized"));
+        addText("Body de retorno: " + super.getBody());
     }
 
     @E("valido que o nome da conta foi inserido de acordo")
     public void queONomeDaContaFoiInseridoDeAcordo() {
         Assert.assertTrue(super.bodyContains(nomeCompania));
+        addText("Body de retorno: " + super.getBody());
     }
 
     @E("valido que o nome da conta foi alterado de acordo")
     public void validoQueONomeDaContaFoiAlteradoDeAcordo() {
         this.queONomeDaContaFoiInseridoDeAcordo();
+        addText("Body de retorno: " + super.getBody());
     }
 
     @E("valido a mensagem {string}")
     public void validoAMensagem(String mensagem) {
         Assert.assertTrue(super.bodyContains(mensagem));
+        addText("Body de retorno: " + super.getBody());
     }
 
     @E("certifique que eu tenho uma conta criada")
@@ -122,5 +127,6 @@ public class ContasSteps extends RequestSteps {
         facoUmaRequisicaoGETNaApiDeContasToken("com");
         contasList = super.getListaPorPath("id");
         Assert.assertTrue(contasList.size()>0);
+        addText("Quantidade de contas recuperadas: " + contasList.size());
     }
 }

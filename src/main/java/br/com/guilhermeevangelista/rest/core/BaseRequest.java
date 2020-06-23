@@ -1,6 +1,7 @@
 package br.com.guilhermeevangelista.rest.core;
 
 import br.com.guilhermeevangelista.rest.core.utils.PropertiesManager;
+import io.cucumber.java.Scenario;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
@@ -11,8 +12,9 @@ import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 
-public class RequestSteps{
+public class BaseRequest {
 
+    public static Scenario scenario;
     protected static Response response;
     protected static String token;
 
@@ -26,6 +28,8 @@ public class RequestSteps{
                 .when()
                     .get("/"+api);
 
+        addText("Fazendo um get na api '"+api+"' sem token");
+
         return response;
     }
 
@@ -35,6 +39,8 @@ public class RequestSteps{
                 .when()
                     .get("/"+api);
 
+        addText("Fazendo um get na api '"+api+"' com token");
+
         return response;
     }
 
@@ -43,6 +49,8 @@ public class RequestSteps{
                     .body(body)
                 .when()
                     .post("/"+api);
+
+        addText("Body de envio:"+response.then().extract().body().asString());
 
         return response;
     }
@@ -54,6 +62,8 @@ public class RequestSteps{
                 .when()
                     .post("/"+api);
 
+        addText("Body de envio:"+response.then().extract().body().asString());
+
         return response;
     }
 
@@ -63,6 +73,8 @@ public class RequestSteps{
                 .when()
                     .post("/"+api);
 
+        addText("Body de envio:"+response.then().extract().body().asString());
+
         return response;
     }
 
@@ -70,9 +82,11 @@ public class RequestSteps{
         response = given()
                     .header("Authorization", "JWT " + token)
                     .body(body.toString())
-                    .log().all()
+//                    .log().all()
                 .when()
                     .post("/"+api);
+
+        addText("Body de envio:"+response.then().extract().body().asString());
 
         return response;
     }
@@ -83,6 +97,8 @@ public class RequestSteps{
                 .when()
                     .put("/"+api);
 
+        addText("Body de envio:"+response.then().extract().body().asString());
+
         return response;
     }
 
@@ -92,6 +108,8 @@ public class RequestSteps{
                     .body(body)
                 .when()
                     .put("/"+api);
+
+        addText("Body de envio:"+response.then().extract().body().asString());
 
         return response;
     }
@@ -133,5 +151,14 @@ public class RequestSteps{
 
     protected void gerarLogErro(String texto) {
 
+    }
+
+    public static void addText(String texto) {
+        if (texto != null)
+            scenario.write("\n"+texto);
+    }
+
+    protected String getBody() {
+        return response.then().extract().body().asString();
     }
 }

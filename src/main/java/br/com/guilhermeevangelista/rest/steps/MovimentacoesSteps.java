@@ -1,6 +1,6 @@
 package br.com.guilhermeevangelista.rest.steps;
 
-import br.com.guilhermeevangelista.rest.core.RequestSteps;
+import br.com.guilhermeevangelista.rest.core.BaseRequest;
 import br.com.guilhermeevangelista.rest.core.utils.FakeUtils;
 import br.com.guilhermeevangelista.rest.core.utils.JsonUtils;
 
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MovimentacoesSteps extends RequestSteps{
+public class MovimentacoesSteps extends BaseRequest {
     ContasSteps contasSteps = new ContasSteps();
     List<Object> contasList;
 
@@ -37,6 +37,7 @@ public class MovimentacoesSteps extends RequestSteps{
     @Então("valido que a movimentacao foi inserida com sucesso")
     public void validoQueAMovimentacaoFoiInseridaComSucesso() {
         Assert.assertEquals(201, super.getStatusCode());
+        addText("Status code retornado: "+response.then().extract().statusCode());
     }
 
     public JSONObject gerarValoresDeMovimentacao() throws IOException {

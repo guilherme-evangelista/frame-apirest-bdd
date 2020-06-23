@@ -1,7 +1,9 @@
 package br.com.guilhermeevangelista.rest.core.hooks;
 
+import br.com.guilhermeevangelista.rest.core.BaseRequest;
 import br.com.guilhermeevangelista.rest.core.utils.PropertiesManager;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -11,7 +13,7 @@ import org.hamcrest.Matchers;
 public class Hooks {
 
     @Before
-    public void setup(){
+    public void setup(Scenario scenario){
         PropertiesManager manager = new PropertiesManager();
 
         RestAssured.baseURI = manager.getProp("APP_BASE_URI");
@@ -27,6 +29,8 @@ public class Hooks {
                 .build();
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+        BaseRequest.scenario = scenario;
     }
 
 }
