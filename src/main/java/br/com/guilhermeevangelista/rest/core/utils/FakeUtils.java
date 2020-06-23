@@ -28,6 +28,10 @@ public class FakeUtils {
         return faker.name().fullName();
     }
 
+    public static String gerarEmail(){
+        return faker.internet().emailAddress();
+    }
+
     public static String gerarNickName(){
         return faker.name().username();
     }
