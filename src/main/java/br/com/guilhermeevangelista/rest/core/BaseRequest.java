@@ -1,6 +1,7 @@
 package br.com.guilhermeevangelista.rest.core;
 
 import br.com.guilhermeevangelista.rest.core.utils.PropertiesManager;
+import br.com.guilhermeevangelista.rest.core.utils.enums.Users;
 import io.cucumber.java.Scenario;
 import io.restassured.response.Response;
 import org.json.JSONObject;
@@ -117,8 +118,8 @@ public class BaseRequest {
     public String getToken(String user){
         map = new HashMap<>();
 
-        map.put("email", propertiesManager.getProp("USER_"+user.toUpperCase()));
-        map.put("senha", propertiesManager.getProp("PASSWORD_"+user.toUpperCase()));
+        map.put("email", Users.valueOf(user.toUpperCase()).getEmail());
+        map.put("senha", Users.valueOf(user.toUpperCase()).getSenha());
 
         token = realizarPost("signin", map)
                 .then()

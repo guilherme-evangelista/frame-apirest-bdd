@@ -18,6 +18,6 @@ import java.io.IOException;
 public class RunTest {
     @AfterClass
     public static void gerarRelatorio() throws IOException {
-            Report.gerarRelarotioClueCumber();
+        Report.gerarRelarotioClueCumber();
     }
 }

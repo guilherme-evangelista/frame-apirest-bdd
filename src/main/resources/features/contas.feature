@@ -29,5 +29,5 @@
     Cenario: Não conseguir incluir conta com nome repetido
       Dado que eu obtenha o token previamente do user "padrao"
       Quando faco uma requisicao POST na api de contas "com" token e com nome repetido
-      Entao valido o status code 404
+      Entao valido o status code 400
       E valido a mensagem "Já existe uma conta com esse nome!"
