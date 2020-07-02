@@ -1,0 +1,27 @@
+.navbar, .footer, .card-header {
+    background-color: #90b02d !important;
+    color: white;
+}
+
+.pb-2.mt-4.mb-2.border-bottom h5, .pb-2.mt-4.mb-2.border-bottom h3 {
+    white-space: pre-wrap;
+    text-align: left;
+    line-height: 1.5;
+}
+
+@media (min-width: 1025px){
+    .navbar-nav {
+        background-image: url(https://www.alelo.com.br/content/dam/alelo-institucional/Cabecalho-Rodape/alelo-logo.png);
+        background-repeat: no-repeat;
+        background-size: auto 100%;
+        padding-left: 75px;
+    }
+}
+
+.footer div span {
+  display: none;
+}
+
+.footer div:after {
+  content: 'Todos os direitos reservados. Copyright 2020 Alelo. Time QA';
+}

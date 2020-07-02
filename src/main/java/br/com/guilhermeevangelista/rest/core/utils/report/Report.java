@@ -1,6 +1,7 @@
 package br.com.guilhermeevangelista.rest.core.utils.report;
 
 import com.rajatthareja.reportbuilder.ReportBuilder;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -47,7 +48,7 @@ public class Report {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                output.append(line + "\n");
+                output.append(line).append("\n");
             }
 
             int exitVal = process.waitFor();
@@ -61,12 +62,9 @@ public class Report {
         }
     }
 
-
-}
-
-class test{
-    public static void main(String[] args) {
-        Report.gerarRelatorioReportBuilder();
-//        Report.gerarRelarotioClueCumber();
+    @Test
+    public void gerarRelatorio(){
+        gerarRelarotioClueCumber();
     }
+
 }

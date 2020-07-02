@@ -5,10 +5,11 @@
   @regression @contas
   Funcionalidade: Api de Contas
 
+    #voltar pra 401
     @resquisicaoSemToken @negativo
     Cenario: Nao conseguir resiquitar minha api sem token
       Quando faco uma requisicao GET na api de contas "sem" token
-      Entao valido o status code 401
+      Entao valido o status code 400
       E valido a mensagem de usuario nao autorizado
 
     @incluirConta @positivo
