@@ -13,7 +13,7 @@ public class PropertiesManager {
     public String getProp(String valor) {
         try {
             if (System.getProperty("env") == null) {
-                prop.load(new FileInputStream( file.getAbsolutePath() + "/core.properties"));
+                prop.load(new FileInputStream( file.getAbsolutePath() + "/propriedades/core.properties"));
             } else {
                 prop.load(new FileInputStream(file.getCanonicalPath() + "/" + System.getProperty("env")));
             }

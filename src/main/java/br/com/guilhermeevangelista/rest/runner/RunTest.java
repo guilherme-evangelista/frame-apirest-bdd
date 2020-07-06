@@ -18,10 +18,8 @@ import org.junit.runner.RunWith;
         tags = {"@regression"})
 
 public class RunTest {
-
     @AfterClass
     public static void gerarRelatorio(){
         Report.gerarRelarotioClueCumber();
     }
-
 }
